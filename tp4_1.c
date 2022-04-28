@@ -13,6 +13,7 @@ typedef struct tarea{
 void cargarTareas(tarea **tareasPendientes, int cantidadTareas);
 void ordenarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int cantidadTareas);
 void mostrarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int cantidadTareas);
+void escribirTareas(tarea *listaDeTareas);
 
 int main(){
     srand(time(NULL));
@@ -56,7 +57,8 @@ void ordenarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int canti
     printf("\n------------LISTA DE TAREAS CARGADAS------------\n");
     for (int i = 0; i < cantidadTareas; i++)
     {
-        printf("Tarea numero %d\n",(*(tareasPendientes+i))->tareaID);
+        printf("Tarea numero %d:\n",(*(tareasPendientes+i))->tareaID);
+        printf("%s\n",(*(tareasPendientes+i))->descripcion);
         printf("¿Ya esta completada? [0]: No [1]: Si\n");
         scanf("%d",&completada);
         if (completada==1)
@@ -74,25 +76,25 @@ void ordenarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int canti
 }
 
 void mostrarTareas(tarea **tareasPendientes, tarea** tareasRealizadas, int cantidadTareas){
-    printf("\n------------LISTA DE TAREAS A REALIZAR------------\n");
+    printf("\n------------LISTA DE TAREAS PENDIENTES------------\n");
     for (int i = 0; i < cantidadTareas; i++)
     {
-        if ((*(tareasPendientes+i))!=NULL)
-        {
-            printf("Tarea numero %d\n",(*(tareasPendientes+i))->tareaID);
-            printf("Descripcion: %s\n",(*(tareasPendientes+i))->descripcion);
-            printf("Duracion estimada: %d horas\n",(*(tareasPendientes+i))->duracion);
-        }
+        escribirTareas(*(tareasPendientes+i));
     }
 
     printf("\n------------LISTA DE TAREAS REALIZADAS------------\n");
     for (int i = 0; i < cantidadTareas; i++)
     {
-        if ((*(tareasRealizadas+i))!=NULL)
-        {
-            printf("Tarea numero %d\n",(*(tareasRealizadas+i))->tareaID);
-            printf("Descripcion: %s\n",(*(tareasRealizadas+i))->descripcion);
-            printf("Duracion estimada: %d horas\n",(*(tareasRealizadas+i))->duracion);
-        }
+        escribirTareas(*(tareasRealizadas+i));
     }
 }
+
+void escribirTareas(tarea *listaDeTareas){
+    if (listaDeTareas!=NULL)
+    {
+        printf("Tarea numero %d\n",listaDeTareas->tareaID);
+        printf("Descripcion: %s\n",listaDeTareas->descripcion);
+        printf("Duracion estimada: %d horas\n",listaDeTareas->duracion);
+    }
+}
+
