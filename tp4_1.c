@@ -14,11 +14,11 @@ void cargarTareas(tarea **tareasPendientes, int cantidadTareas);
 void ordenarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int cantidadTareas);
 void mostrarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int cantidadTareas);
 void escribirTareas(tarea *listaDeTareas);
-void buscarPorID(tarea **listaPendientes, int id, int cantidadDeTareas);
+void buscaTarea(tarea **listaPendientes, int id, int cantidadDeTareas);
 
 int main(){
     srand(time(NULL));
-    int cantidadTareas;
+    int cantidadTareas, id;
     tarea **tareasPendientes, **tareasRealizadas;
 
     printf("Ingrese la cantidad de tareas a cargar: ");
@@ -29,6 +29,10 @@ int main(){
     cargarTareas(tareasPendientes, cantidadTareas);
     ordenarTareas(tareasPendientes, tareasRealizadas, cantidadTareas);
     mostrarTareas(tareasPendientes, tareasRealizadas, cantidadTareas);
+    printf("Ingrese el ID de la tarea a buscar: ");
+    scanf("%d",&id);
+    buscaTarea(tareasPendientes,id,cantidadTareas);
+    buscaTarea(tareasRealizadas,id,cantidadTareas);
 
     fflush(stdin);
     getchar();
@@ -99,14 +103,16 @@ void escribirTareas(tarea *listaDeTareas){
     }
 }
 
-void buscarPorID(tarea **listaDeTareas, int id, int cantidadDeTareas){
+void buscaTarea(tarea **listaDeTareas, int id, int cantidadDeTareas){
     for (int i = 0; i < cantidadDeTareas; i++)
     {
-        if (())
+        if ((*(listaDeTareas+i))!=NULL)
         {
-            /* code */
+            if ( (*(listaDeTareas+i))->tareaID==id )
+            {
+                printf("\n------------TAREA ENCONTRADA------------\n");
+                escribirTareas(*(listaDeTareas+i));
+            }
         }
-        
     }
-    
 }
