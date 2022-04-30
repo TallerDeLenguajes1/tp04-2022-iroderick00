@@ -14,11 +14,12 @@ void cargarTareas(tarea **,int);
 void ordenarTareas(tarea **,tarea **,int);
 void mostrarTareas(tarea **,tarea **,int);
 void escribirTareas(tarea *);
-void buscaTarea(tarea **,char *,int);
+void buscaTareaPalabraClave(tarea **,char *,int);
+void buscaTareaID(tarea **,int,int);
 
 int main(){
     srand(time(NULL));
-    int cantidadTareas;
+    int cantidadTareas,id;
     char *buff, *palabraClave;
     tarea **tareasPendientes, **tareasRealizadas;
 
@@ -30,6 +31,7 @@ int main(){
     cargarTareas(tareasPendientes, cantidadTareas);
     ordenarTareas(tareasPendientes, tareasRealizadas, cantidadTareas);
     mostrarTareas(tareasPendientes, tareasRealizadas, cantidadTareas);
+    
     fflush(stdin);
     buff=(char*)malloc(50*sizeof(char));
     printf("Ingrese la palabra clave a buscar: ");
@@ -37,8 +39,13 @@ int main(){
     palabraClave=(char *)malloc((strlen(buff)+1)*sizeof(char));
     strcpy(palabraClave,buff);
     free(buff);
-    buscaTarea(tareasPendientes,palabraClave,cantidadTareas);
-    buscaTarea(tareasRealizadas,palabraClave,cantidadTareas);
+    buscaTareaPalabraClave(tareasPendientes,palabraClave,cantidadTareas);
+    buscaTareaPalabraClave(tareasRealizadas,palabraClave,cantidadTareas);
+
+    printf("Ingrese el ID de la tarea a buscar: ");
+    scanf("%d",&id);
+    buscaTareaID(tareasPendientes,id,cantidadTareas);
+    buscaTareaID(tareasRealizadas,id,cantidadTareas);
 
     fflush(stdin);
     getchar();
@@ -109,7 +116,20 @@ void escribirTareas(tarea *listaDeTareas){
     }
 }
 
-void buscaTarea(tarea **listaDeTareas, char * palabraClave, int cantidadDeTareas){
+void buscaTareaID(tarea **listaDeTareas, int id, int cantidadDeTareas){
+    for (int i = 0; i < cantidadDeTareas; i++)
+    {
+        if ((*(listaDeTareas+i))!=NULL)
+        {
+            if ((*(listaDeTareas+i))->tareaID==id)
+            {
+                printf("\n------------TAREA ENCONTRADA------------\n");
+                escribirTareas(*(listaDeTareas+i));
+            }
+        }
+    }
+}
+void buscaTareaPalabraClave(tarea **listaDeTareas, char *palabraClave, int cantidadDeTareas){
     for (int i = 0; i < cantidadDeTareas; i++)
     {
         if ((*(listaDeTareas+i))!=NULL)
