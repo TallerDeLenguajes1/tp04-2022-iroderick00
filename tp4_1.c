@@ -10,14 +10,16 @@ typedef struct tarea{
     int duracion;//entre 10 y 100
 }tarea;
 
-void cargarTareas(tarea **tareasPendientes, int cantidadTareas);
-void ordenarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int cantidadTareas);
-void mostrarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int cantidadTareas);
-void escribirTareas(tarea *listaDeTareas);
+void cargarTareas(tarea **,int);
+void ordenarTareas(tarea **,tarea **,int);
+void mostrarTareas(tarea **,tarea **,int);
+void escribirTareas(tarea *);
+void buscaTarea(tarea **,char *,int);
 
 int main(){
     srand(time(NULL));
     int cantidadTareas;
+    char *buff, *palabraClave;
     tarea **tareasPendientes, **tareasRealizadas;
 
     printf("Ingrese la cantidad de tareas a cargar: ");
@@ -28,6 +30,15 @@ int main(){
     cargarTareas(tareasPendientes, cantidadTareas);
     ordenarTareas(tareasPendientes, tareasRealizadas, cantidadTareas);
     mostrarTareas(tareasPendientes, tareasRealizadas, cantidadTareas);
+    fflush(stdin);
+    buff=(char*)malloc(50*sizeof(char));
+    printf("Ingrese la palabra clave a buscar: ");
+    gets(buff);
+    palabraClave=(char *)malloc((strlen(buff)+1)*sizeof(char));
+    strcpy(palabraClave,buff);
+    free(buff);
+    buscaTarea(tareasPendientes,palabraClave,cantidadTareas);
+    buscaTarea(tareasRealizadas,palabraClave,cantidadTareas);
 
     fflush(stdin);
     getchar();
@@ -98,3 +109,16 @@ void escribirTareas(tarea *listaDeTareas){
     }
 }
 
+void buscaTarea(tarea **listaDeTareas, char * palabraClave, int cantidadDeTareas){
+    for (int i = 0; i < cantidadDeTareas; i++)
+    {
+        if ((*(listaDeTareas+i))!=NULL)
+        {
+            if (strcmp((*(listaDeTareas+i))->descripcion,palabraClave)==0)
+            {
+                printf("\n------------TAREA ENCONTRADA------------\n");
+                escribirTareas(*(listaDeTareas+i));
+            }
+        }
+    }
+}
