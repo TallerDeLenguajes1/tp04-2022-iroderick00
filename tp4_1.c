@@ -14,6 +14,7 @@ void cargarTareas(tarea **tareasPendientes, int cantidadTareas);
 void ordenarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int cantidadTareas);
 void mostrarTareas(tarea **tareasPendientes, tarea **tareasRealizadas, int cantidadTareas);
 void escribirTareas(tarea *listaDeTareas);
+void buscarPorID(tarea **listaPendientes, int id, int cantidadDeTareas);
 
 int main(){
     srand(time(NULL));
@@ -98,3 +99,14 @@ void escribirTareas(tarea *listaDeTareas){
     }
 }
 
+void buscarPorID(tarea **listaDeTareas, int id, int cantidadDeTareas){
+    for (int i = 0; i < cantidadDeTareas; i++)
+    {
+        if (())
+        {
+            /* code */
+        }
+        
+    }
+    
+}
