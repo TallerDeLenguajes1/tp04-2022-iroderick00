@@ -26,6 +26,7 @@ void mostrarListaDeTareas(lista);
 void *buscarPorPalabra(lista,char*);
 void *buscarPorID (lista,int);
 void eliminarNodo(lista *);
+void eliminarLista(lista *);
 
 void main(){
     srand(time(NULL));
@@ -56,12 +57,12 @@ void main(){
     printf("\nLAS TAREAS PENDIENTES EN ESTE MOMENTO SON:\n");
     mostrarListaDeTareas(tareasPendientes);
 
-    puts("\nIngrese la ID de la tarea que quiere buscar: ");
+    printf("\nIngrese la ID de la tarea que quiere buscar: ");
     scanf("%d",&id);
     buscarPorID(tareasPendientes,id);
     buscarPorID(tareasRealizadas,id);
 
-    puts("\nIngrese la palabra clave que desea buscar: ");
+    printf("\nIngrese la palabra clave que desea buscar: ");
     fflush(stdin);
     gets(buff);
     palabraClave= (char *)malloc((strlen(buff)+1)*sizeof(char));
@@ -69,6 +70,10 @@ void main(){
     free(buff);
     buscarPorPalabra(tareasPendientes,palabraClave);
     buscarPorPalabra(tareasRealizadas,palabraClave);
+
+    printf("LIBERO LA MEMORIA RESERVADA.");
+    eliminarLista(&tareasPendientes);
+    eliminarLista(&tareasRealizadas);
 
     fflush(stdin);
     getchar();
