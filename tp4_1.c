@@ -45,7 +45,16 @@ void main(){
         insertarNodo(&tareasPendientes,nodoAuxiliar);
     }
 
+    printf("\nLAS TAREAS CARGADAS EN ESTE MOMENTO SON:\n");
+    mostrarListaDeTareas(tareasPendientes);
+    printf("PARA ORDENAR LAS TAREAS PRESIONE CUALQUIER TECLA ");
+    getchar();
+
     ordenarTareas(&tareasPendientes,&tareasRealizadas);
+    printf("\nLAS TAREAS REALIZADAS EN ESTE MOMENTO SON:\n");
+    mostrarListaDeTareas(tareasRealizadas);
+    printf("\nLAS TAREAS PENDIENTES EN ESTE MOMENTO SON:\n");
+    mostrarListaDeTareas(tareasPendientes);
 
     puts("\nIngrese la ID de la tarea que quiere buscar: ");
     scanf("%d",&id);
@@ -96,47 +105,43 @@ void insertarNodo(lista *head, nodo *nodoAInsertar){
 }
 
 void escribirTarea(tarea tareaAEscribir){
-    printf("----------Tarea numero %d----------\n",tareaAEscribir.tareaID);
-    printf("-----------Descripcion-----------\n");
+    printf("\n----------Tarea numero %d----------\n",tareaAEscribir.tareaID);
+    printf("\n-----------Descripcion-----------\n");
     puts(tareaAEscribir.descripcion);
     printf("Duracion: %d\n",tareaAEscribir.duracion);
 }
 
 void ordenarTareas(lista *tareasPendientes,lista *tareasRealizadas){
     int completada;
-    lista auxiliar=*tareasPendientes;
-    nodo *nodoAuxiliar;
+    lista listaAuxiliar=*tareasPendientes;
+    nodo *nodoAuxiliar,*nodoAnterior=listaAuxiliar;
     printf("\n------------------TAREAS CARGADAS------------------\n");
-    while (auxiliar)
+    while (listaAuxiliar)
     {
-        escribirTarea(auxiliar->tarea);
+        escribirTarea(listaAuxiliar->tarea);
         fflush(stdin);
-        printf("¿Tarea completada? [0]: NO [1]:SI\n");
+        printf("\n¿Tarea completada? [0]: NO [1]:SI\n");
         scanf("%d",&completada);
         if (completada==1)
         {
-            if (auxiliar->siguiente!=NULL)//LA LISTA TIENE MAS DE UN ELEMENTO
+            nodoAuxiliar=listaAuxiliar;
+            if (nodoAnterior==listaAuxiliar)//es el primer elemento de la lista
             {
-                if (auxiliar->siguiente->siguiente!=NULL)//LA LISTA TIENE DOS ELEMENTOS O MAS
-                {
-                    
-                }
-            }else{//SI LA LISTA TIENE 1 ELEMENTO
-                nodoAuxiliar=auxiliar;
-                *tareasPendientes=(*tareasPendientes)->siguiente;
-                // insertarNodo(*tareasRealizadas,nodoAuxiliar);
-                nodoAuxiliar->siguiente=*tareasRealizadas;
-                *tareasRealizadas=nodoAuxiliar;
+                (*tareasPendientes)=(*tareasPendientes)->siguiente;
+                listaAuxiliar=*tareasPendientes;
+            }else{
+                    (*nodoAnterior).siguiente=listaAuxiliar->siguiente;
+                    listaAuxiliar=listaAuxiliar->siguiente;
             }
-            // nodoAuxiliar=auxiliar;
-            // *tareasPendientes=(*tareasPendientes)->siguiente;
-            // // insertarNodo(*tareasRealizadas,nodoAuxiliar);
-            // nodoAuxiliar->siguiente=*tareasRealizadas;
-            // *tareasRealizadas=nodoAuxiliar;
+            (*nodoAuxiliar).siguiente=*tareasRealizadas;
+            *tareasRealizadas=nodoAuxiliar;
+        }else{
+            listaAuxiliar=listaAuxiliar->siguiente;
+            nodoAnterior=*tareasPendientes;
         }
-        auxiliar=auxiliar->siguiente;
     }
 }
+
 
 void mostrarListaDeTareas(lista listaAMostrar){
     while (listaAMostrar)
@@ -154,7 +159,7 @@ void *buscarPorPalabra(lista lista,char* palabraClave){
     }
     if (lista)
     {
-        puts("-----------Tarea Encontrada-----------");
+        puts("\n-----------Tarea Encontrada-----------\n");
         escribirTarea(lista->tarea);
     }
    
@@ -167,7 +172,7 @@ void *buscarPorID (lista lista, int id){
     }
     if (lista)
     {
-        puts("-----------Tarea Encontrada-----------");
+        puts("\n-----------Tarea Encontrada-----------\n");
         escribirTarea(lista->tarea);
     }
 }
@@ -184,5 +189,3 @@ void eliminarLista(lista *listaABorrar){
         eliminarNodo(listaABorrar);   
     }
 }
-
-void ordenarTareas(lista *tareasPendientes, lista *tareasRealizadas)
